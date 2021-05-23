@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/peter_the_greatest/Desktop/leetcode/build",
+  "command": "/usr/bin/clang++   -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -std=gnu++2a -o CMakeFiles/leetcode.dir/main.cpp.o -c /Users/peter_the_greatest/Desktop/leetcode/main.cpp",
+  "file": "/Users/peter_the_greatest/Desktop/leetcode/main.cpp"
+}
+]
