@@ -1,46 +1,67 @@
-// pwwkew
-// output 3
-
-
+//while(遍历s) {
+//index = hash_map[s[i]]
+//if(can found s[i] in hash map且index 属于[left, right]) {
+//  left = index + 1;
+//}
+//has_map[s[i]] = right
+//// right++是遍历条件
+//}
+#include "vector"
 #include "iostream"
-#include "unordered_map"
 
 using namespace std;
-class Solution {
-public:
-    static int lengthOfLongestSubString(string s) {
-        if(s.length() == 0) {
-            return 0;
-        }
-        unordered_map<char, int> hash_map;
-        int max_length = 0;
-        int current_length = 0;
-        int start_index = 0;
-        for(int i = 0; i < s.length(); i++) {
-            // to check whether s[i] is in the hash map
-            if(hash_map.find(s[i]) == hash_map.end()) {
-                current_length++;
-                hash_map[s[i]] = i; // todo: ?
-            } else {
-                if(current_length > max_length) {
-                    max_length = current_length;
-                }
-                start_index = max(hash_map[s[i]], start_index);
-                if(hash_map[s[i]] < start_index) {
-                    cout << "fuck" ;
-                }
-                current_length = i - start_index;
-                hash_map[s[i]] = i;
-            }
-        }
-        if(current_length > max_length) {
-            max_length = current_length;
-        }
-        return max_length;
-    }
-
-};
 
 int main() {
-    Solution::lengthOfLongestSubString("fxffxf");
+    string s = "xxxxx";
+    vector<int> v(128, -1);
+    int max_right = 0;
+    int max_left = 0;
+    int right = 0;
+    int left = 0;
+    for (int i = 0; i <= s.length() - 1; i++) {
+        right = i;
+        int prev_index = v[s[i]];
+        if (prev_index <= right && prev_index >= left && prev_index != -1) {
+            left = prev_index + 1;
+        }
+        v[s[i]] = right;
+//        cout << right << " " << left << endl;
+        if (max_right - max_left <= right - left) {
+            max_left = left;
+            max_right = right;
+        }
+    }
+    cout << max_right << " " << max_left << endl;
+    for (int i = max_left; i <= max_right; i++) {
+        cout << s[i] << endl;
+    }
+
 }
+
+//class Solution {
+//public:
+//    int lengthOfLongestSubstring(string s) {
+//        if (s.length() == 0) {
+//            return 0;
+//        }
+//        vector<int> v(128, -1);
+//        int max_right = 0;
+//        int max_left = 0;
+//        int right = 0;
+//        int left = 0;
+//        for (int i = 0; i <= s.length() - 1; i++) {
+//            right = i;
+//            int prev_index = v[s[i]];
+//            if (prev_index <= right && prev_index >= left && prev_index != -1) {
+//                left = prev_index + 1;
+//            }
+//            v[s[i]] = right;
+//
+//            if (max_right - max_left <= right - left) {
+//                max_left = left;
+//                max_right = right;
+//            }
+//        }
+//        return max_right - max_left + 1;
+//    }
+//};
