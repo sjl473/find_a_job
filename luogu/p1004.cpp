@@ -1,50 +1,33 @@
-//     #include<iostream>
-// //     #include<cstdio>
-// //     #include<algorithm>
-// //     using namespace std;
-// //     int f[12][12][12][12],a[12][12],n,x,y,z;
-// //     int main() {
-// //         cin>>n>>x>>y>>z;
-// //         while(x!=0||y!=0||z!=0){
-// //             a[x][y]=z;
-// //             cin>>x>>y>>z;
-// //         }
-// //         for(int i=1;i<=n;i++){
-// //             for(int j=1;j<=n;j++){
-// //                 for(int k=1;k<=n;k++){
-// //                     for(int l=1;l<=n;l++){
-// //                         f[i][j][k][l]=max(max(f[i-1][j][k-1][l],f[i-1][j][k][l-1]),max(f[i][j-1][k-1][l],f[i][j-1][k][l-1]))+a[i][j]+a[k][l];
-// //                         if(i==k&&l==j) f[i][j][k][l]-=a[i][j];
-// // left left, left up  || up left, up, up
-// //                     }
-// //                 }
-// //             }
-// //         }
-// //         cout<<f[n][n][n][n];
-// //         return 0;
-// // }
-// #include <iostream>
-// #include <vector>
-// #include <algorithm>
-// using namespace std;
-// int f[12][12][12][12];
-// int a[12][12];
-// int n, x, y, z;
-// int main() {
-//     cin >> n >> x >> y >> z;
-//     while(x != 0 || y != 0 || z != 0) {
-//         a[x][y] = z;
-//         cin >> x >> y >> z;
-//     }
-//     for(int i = 1; i <= n; i++) {
-//         for(int j = 1; j <= n; j++) {
-//             for(int k = 1; k <= n; k++) {
-//                 for(int l = 1; l <= n; l++) {
-//                     f[i][j][k][l] = std::max(
-                        
-//                     );
-//                 }
-//             }
-//         }
-//     }
-// }
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+using namespace std;
+int row, x, y, val;
+int val_matrix[12][12];
+int dp[12][12][12][12];
+int main() {
+
+    cin >> row >> x >> y >> val;
+    while(!(val == 0 && x == 0 && y == 0)) {
+        val_matrix[x][y] = val;
+        cin >> x >> y >> val;
+    }
+    for(int i = 1; i <= row; i++) {
+        for(int j = 1; j <= row; j++) {
+            for(int m = 1; m <= row; m++) {
+                for(int n = 1; n <= row; n++) {
+                    int case1 = dp[i - 1][j][m - 1][n];
+                    int case2 = dp[i - 1][j][m][n - 1];
+                    int case3 = dp[i][j - 1][m - 1][n];
+                    int case4 = dp[i][j - 1][m][n - 1];
+                    dp[i][j][m][n] = std::max(std::max(case1, case2), std::max(case3, case4)) + val_matrix[i][j] + val_matrix[m][n];
+                    if(i == m && j == n) {
+                        dp[i][j][m][n] -= val_matrix[i][j];
+                    }
+                }
+            }
+        }
+    }
+    cout << dp[row][row][row][row];
+    return 0;
+}
