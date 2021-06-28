@@ -6,6 +6,8 @@ public:
         }
         int nums_of_islands = 0;
         queue<pair<int, int>> q;
+        int rows = grid.size();
+        int cols = grid[0].size();
         for(int i = 0; i <= grid.size() - 1; i++) {
             for(int j = 0; j <= grid[i].size() - 1; j++) {
                 if(grid[i][j] == '1') {
@@ -19,7 +21,7 @@ public:
                         int col = node.second;
                         if(row + 1 < rows && grid[row + 1][col] == '1') {
                             q.push(make_pair(row + 1, col));
-                            grid[row + 1][col] = '0'
+                            grid[row + 1][col] = '0';
                         }
                         if(col + 1 < cols && grid[row][col + 1] == '1') {
                             q.push(make_pair(row, col + 1));
@@ -37,7 +39,9 @@ public:
                 }
             }
         }
-        return nums_of_island;
+        return nums_of_islands;
     }
 };
+
+
 
