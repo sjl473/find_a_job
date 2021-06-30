@@ -1,39 +1,50 @@
 class Solution {
 public:
     int numIslands(vector<vector<char>>& grid) {
-        if(grid.size() == 0) {
+        int max_y = grid.size();
+        if(max_y == 0) {
             return 0;
         }
-        int nums_of_islands = 0;
+        int max_x = grid[0].size();
         queue<pair<int, int>> q;
-        int rows = grid.size();
-        int cols = grid[0].size();
-        for(int i = 0; i <= grid.size() - 1; i++) {
-            for(int j = 0; j <= grid[i].size() - 1; j++) {
+        int nums_of_islands = 0;
+        for(int i = 0; i <= max_y - 1; i++) {
+            for(int j = 0; j <= max_x - 1; j++){
                 if(grid[i][j] == '1') {
-                    ++nums_of_islands;
+                    nums_of_islands++;
+                    queue<pair<int, int>> q;
                     q.push(make_pair(i, j));
-                    grid[i][j] = '0';
                     while(q.empty() == false) {
-                        pair<int, int> node = q.front();
-                        q.pop();
-                        int row = node.first;
-                        int col = node.second;
-                        if(row + 1 < rows && grid[row + 1][col] == '1') {
-                            q.push(make_pair(row + 1, col));
-                            grid[row + 1][col] = '0';
-                        }
-                        if(col + 1 < cols && grid[row][col + 1] == '1') {
-                            q.push(make_pair(row, col + 1));
-                            grid[row][col + 1] ='0';
-                        }
-                        if(row - 1 >= 0 && grid[row - 1][col] == '1'){
-                            q.push(make_pair(row - 1,col));
-                            grid[row - 1][col] ='0';
-                        }
-                        if(col - 1 >= 0 && grid[row][col - 1] == '1'){
-                            q.push(make_pair(row, col - 1));
-                            grid[row][col - 1] ='0';
+                        int counter = q.size();
+                        while(counter != 0) {
+                            int x = q.front().second;
+                            int y = q.front().first;
+                            if(x + 1 <= max_x - 1) {
+                                if(grid[y][x + 1] == '1') {
+                                    grid[y][x + 1] = '0';
+                                    q.push(make_pair(y, x + 1));
+                                }
+                            }
+                            if(y + 1 <= max_y - 1) {
+                                if(grid[y + 1][x] == '1') {
+                                    grid[y + 1][x] = '0';
+                                    q.push(make_pair(y + 1, x));
+                                }
+                            }
+                            if(x - 1 >= 0) {
+                                if(grid[y][x - 1] == '1') {
+                                    grid[y][x - 1] = '0';
+                                    q.push(make_pair(y, x - 1));
+                                }
+                            }
+                            if(y - 1 >= 0) {
+                                if(grid[y - 1][x] == '1') {
+                                    grid[y - 1][x] = '0';
+                                    q.push(make_pair(y - 1, x));
+                                }
+                            }
+                            q.pop();
+                            counter--;
                         }
                     }
                 }
@@ -42,6 +53,8 @@ public:
         return nums_of_islands;
     }
 };
+
+
 
 
 
