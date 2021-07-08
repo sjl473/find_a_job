@@ -1,35 +1,28 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-using namespace std;
 class Solution {
 public:
-    int findCircleNum(vector<vector<int> >& isConnected) {
-        if(isConnected.size() == 0) {
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int gsize = isConnected.size();
+        if(gsize == 0) {
             return 0;
         }
-        if(isConnected.size() == 1) {
-            return 1;
-        }
         int result = 0;
-        int g_size = isConnected.size();
-        vector<bool> vis = vector<bool>(g_size, false);
+        vector<bool> is_vis = vector<bool>(gsize, false);
         queue<int> q;
-        for(int i = 0; i < isConnected.size(); i++) {
-            if(vis[i] == false) {
+        for(int i = 0; i < gsize; i++) {
+            if(is_vis[i] == true) {
+                continue;
+            } else {
                 q.push(i);
                 while(q.empty() == false) {
                     int curr = q.front();
-                    for(int j = 0; j < isConnected[i].size(); j++) {
-                        if(isConnected[curr][j] == 1 && vis[curr] == false) {
+                    for(int j = 0; j < isConnected[curr].size(); j++) {
+                        if(is_vis[j] == false && isConnected[j][curr] == 1) {
                             q.push(j);
                         }
                     }
                     q.pop();
-                    vis[curr] = true;
+                    is_vis[curr] = true;
                 }
-            } else {
-                continue;
             }
             ++result;
         }
