@@ -1,7 +1,7 @@
 class Solution {
     public:
     bool canCross(vector<int> stones) {
-        vector<vector<bool>> dp = 
+        vector<vector<bool>> dp =
             vector<vector<bool>>
             (stones.size() + 1, vector<bool>(stones.size() + 1, false));
         dp[0][0] = true;
